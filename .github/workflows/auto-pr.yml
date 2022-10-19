@@ -13,7 +13,7 @@ jobs:
             const activeBranches = ['feature/staging', 'feature/qa'];
             
             activeBranches.forEach((branch) => {
-              const result = github.rest.pulls.create({
+              const result = await github.rest.pulls.create({
                 title: `Master -> ${branch}`,
                 owner,
                 repo,
@@ -24,6 +24,7 @@ jobs:
                   '[actions/github-script](https://github.com/actions/github-script).'
                 ].join('\n')
               });
+              console.log(result)
             })
             
 
