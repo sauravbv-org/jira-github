@@ -25,6 +25,6 @@ jobs:
                 ].join('\n')
               }).then()
             })
-            console.log()
+            console.log(github)
             
             
