@@ -15,7 +15,7 @@ jobs:
             
             (async  () => {
                   activeBranches.forEach((branch) => {
-                    const result = github.rest.pulls.create({
+                    const result = await github.rest.pulls.create({
                       title: `Master -> ${branch}`,
                       owner,
                       repo,
