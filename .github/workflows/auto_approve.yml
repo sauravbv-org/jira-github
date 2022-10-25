@@ -22,14 +22,22 @@ jobs:
               return prNumbers
             });
 
-            if(prNumbers.length > 0){
-                prNumbers.forEach((prNumber) => {
-                  github.rest.pulls.createReview({
-                    owner,
-                    repo,
-                    pull_number: prNumber,
-                    event: 'APPROVE',
-                    body: `PR approved by auto_approve action`
-                  }).then((response) => console.log(response))
-                })
-              }
+            # if(prNumbers.length > 0){
+            #     prNumbers.forEach((prNumber) => {
+            #       github.rest.pulls.createReview({
+            #         owner,
+            #         repo,
+            #         pull_number: prNumber,
+            #         event: 'APPROVE',
+            #         body: `PR approved by auto_approve action`
+            #       }).then((response) => console.log(response))
+            #     })
+            #   }
+
+  auto-approve:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    if: github.actor == 'sauravbv'
+    steps:
+      - uses: hmarr/auto-approve-action@v3
