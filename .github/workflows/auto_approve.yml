@@ -14,7 +14,6 @@ jobs:
             const prIds = []
 
             const pulls = await github.rest.pulls.list({
-              title: `Master -> ${branch}`,
               owner,
               repo,
               base: 'master'             
