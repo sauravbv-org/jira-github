@@ -13,7 +13,7 @@ jobs:
             # const activeBranches = ['feature/staging', 'feature/qa'];
             const prIds = []
 
-            const pulls = github.rest.pulls.list({
+            github.rest.pulls.list({
               owner,
               repo,
               base: 'master'             
