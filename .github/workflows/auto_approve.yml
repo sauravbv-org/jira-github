@@ -20,7 +20,7 @@ jobs:
             }).then((response) => {
               response.data.forEach((pr) => prNumbers.push(pr.number))
             });
-      
+            console.log(prNumbers)
             if(prNumbers.length > 0){
               prNumbers.forEach((prNumber) => {
                 github.rest.pulls.submitReview({
