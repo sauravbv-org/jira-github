@@ -10,7 +10,7 @@ jobs:
         with:
           script: |
             const { repo, owner } = context.repo;
-            const activeBranches = ['feature/staging', 'feature/qa'];
+            const activeBranches = ['feature/staging'];
             
             activeBranches.forEach((branch) => {
                github.rest.pulls.create({
