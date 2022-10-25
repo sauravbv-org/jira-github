@@ -4,12 +4,10 @@ on: workflow_dispatch
 jobs:
   get-pull-requests-from-master:
     runs-on: ubuntu-latest
-    outputs:
-      prNumbersList: ${{ steps.step1.outputs.result }}
     steps:
-      - name: Auto approve and merge PRs
+      - name: Get list of PRs from master
         uses: actions/github-script@v6
-        id: step1
+        id: prlist
         with:
           script: |
             const { repo, owner } = context.repo;
@@ -25,11 +23,12 @@ jobs:
             });
             return prNumbersArr
           result-encoding: string
-        
-  approve-all-prs:
-      runs-on: ubuntu-latest
-      needs: get-pull-requests-from-master
-      steps: 
-        - run: echo ${{ needs.get-pull-requests-from-master.outputs.prNumbersList }}
-
+      - name: Approve the PRs
+        uses: actions/github-script@v6
+        id: approve
+        with:
+          script: |
+            const prList = ${{ steps.prlist.outputs.result }}
+            console.log(prList)
+            console.log(JSON.parse(prList))
 
