@@ -35,6 +35,7 @@ jobs:
               }
 
   merge-approved-pull-requests:
+    needs: get-pull-requests-from-master
     runs-on: ubuntu-latest
     steps:
       - name: Get list of PRs from master
