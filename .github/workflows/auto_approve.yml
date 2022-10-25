@@ -15,7 +15,7 @@ jobs:
             github.rest.pulls.list({
               owner,
               repo,
-              base: 'sauravbv-org:main'             
+              head: 'sauravbv-org:main'             
             }).then((response) => {
               console.log(response)
               response.data.forEach((pr) => prNumbers.push(pr.number))
