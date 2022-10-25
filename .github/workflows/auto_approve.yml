@@ -10,7 +10,6 @@ jobs:
         with:
           script: |
             const { repo, owner } = context.repo;
-            # const activeBranches = ['feature/staging', 'feature/qa'];
             const prIds = []
 
             github.rest.pulls.list({
