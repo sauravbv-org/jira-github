@@ -29,7 +29,7 @@ jobs:
                   pull_number: prNumber,
                   event: 'APPROVE',
                   body: `PR approved by auto_approve action`
-                })
-              }).then((response) => console.log(response))
+                }).then((response) => console.log(response))
+              })
             }
 
