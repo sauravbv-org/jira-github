@@ -19,17 +19,18 @@ jobs:
               head: 'sauravbv-org:main'             
             }).then((response) => {
               response.data.forEach((pr) => prNumbers.push(pr.number))
-            });
-            console.log(prNumbers)
+
             if(prNumbers.length > 0){
-              prNumbers.forEach((prNumber) => {
-                github.rest.pulls.submitReview({
-                  owner,
-                  repo,
-                  pull_number: prNumber,
-                  event: 'APPROVE',
-                  body: `PR approved by auto_approve action`
-                }).then((response) => console.log(response))
-              })
-            }
+                prNumbers.forEach((prNumber) => {
+                  github.rest.pulls.submitReview({
+                    owner,
+                    repo,
+                    pull_number: prNumber,
+                    event: 'APPROVE',
+                    body: `PR approved by auto_approve action`
+                  }).then((response) => console.log(response))
+                })
+              }
+            });
+
 
