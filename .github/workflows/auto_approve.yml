@@ -1,11 +1,23 @@
-name: Auto approve PRs
-on: pull_request
-
+name: Auto approve and merge PR
+on: workflow_dispatch
+      
 jobs:
-  auto-approve:
+  create-pull-request:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-    if: github.triggering_actor == 'actions/github-script'
     steps:
-      - uses: hmarr/auto-approve-action@v3
+      - name: Create Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+            # const activeBranches = ['feature/staging', 'feature/qa'];
+            const prIds = []
+
+            const pulls = await github.rest.pulls.pulls({
+              title: `Master -> ${branch}`,
+              owner,
+              repo,
+              base: 'master'             
+            }) 
+            console.log(pulls)
+
