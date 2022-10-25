@@ -11,14 +11,16 @@ jobs:
         with:
           script: |
             const { repo, owner } = context.repo;
-            let prNumbers = []
 
-            github.rest.pulls.list({
+            const prNumbers = await github.rest.pulls.list({
               owner,
               repo,
               head: 'sauravbv-org:main'             
             }).then((response) => {
+              let prNumbers = []
               response.data.forEach((pr) => prNumbers.push(pr.number))
+              return prNumbers
+            });
 
             if(prNumbers.length > 0){
                 prNumbers.forEach((prNumber) => {
@@ -31,6 +33,3 @@ jobs:
                   }).then((response) => console.log(response))
                 })
               }
-            });
-
-
