@@ -17,6 +17,7 @@ jobs:
               repo,
               base: 'sauravbv-org:main'             
             }).then((response) => {
+              console.log(response)
               response.data.forEach((pr) => prNumbers.push(pr.number))
               console.log(prNumbers)
             })
