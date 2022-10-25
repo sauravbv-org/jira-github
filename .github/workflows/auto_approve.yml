@@ -17,5 +17,5 @@ jobs:
               owner,
               repo,
               base: 'master'             
-            }).then((response) => response)
+            }).then((response) => console.log(response))
 
