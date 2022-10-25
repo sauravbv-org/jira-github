@@ -12,7 +12,7 @@ jobs:
           script: |
             const { repo, owner } = context.repo;
 
-            const prNumbersArr = github.rest.pulls.list({
+            github.rest.pulls.list({
               owner,
               repo,
               head: 'sauravbv-org:main'             
@@ -21,14 +21,16 @@ jobs:
               response.data.forEach((pr) => prNumbers.push(pr.number))
               return prNumbers
             });
-            return prNumbersArr
-          result-encoding: string
-      - name: Approve the PRs
-        uses: actions/github-script@v6
-        id: approve
-        with:
-          script: |
-            const prList = ${{ steps.prlist.outputs.result }}
-            console.log(prList)
-            console.log(JSON.parse(prList))
+      
+            if(prNumbers.length > 0){
+              prNumbers.forEach((prNumber) => {
+                github.rest.pulls.submitReview({
+                  owner,
+                  repo,
+                  pull_number: prNumber,
+                  event: 'APPROVE',
+                  body: `PR approved by auto_approve action`
+                })
+              })
+            }
 
