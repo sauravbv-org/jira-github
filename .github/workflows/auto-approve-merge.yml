@@ -4,6 +4,8 @@ on: workflow_dispatch
 jobs:
   get-pull-requests-from-master:
     runs-on: ubuntu-latest
+    permissions:
+          pull-requests: write
     steps:
       - name: Get list of PRs from master
         uses: actions/github-script@v6
@@ -37,6 +39,8 @@ jobs:
   merge-approved-pull-requests:
     needs: get-pull-requests-from-master
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Get list of PRs from master
         uses: actions/github-script@v6
