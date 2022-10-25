@@ -4,21 +4,32 @@ on: workflow_dispatch
 jobs:
   get-pull-requests-from-master:
     runs-on: ubuntu-latest
+    outputs:
+      prNumbersList: ${{ steps.step1.outputs.result }}
     steps:
       - name: Auto approve and merge PRs
         uses: actions/github-script@v6
+        id: step1
         with:
           script: |
             const { repo, owner } = context.repo;
-            const prNumbers = []
 
-            github.rest.pulls.list({
+            const prNumbersArr = github.rest.pulls.list({
               owner,
               repo,
               head: 'sauravbv-org:main'             
             }).then((response) => {
-              console.log(response)
+              let prNumbers = []
               response.data.forEach((pr) => prNumbers.push(pr.number))
-              console.log(prNumbers)
-            })
+              return prNumbers
+            });
+            return prNumbersArr
+          result-encoding: string
+        
+  approve-all-prs:
+      runs-on: ubuntu-latest
+      needs: get-pull-requests-from-master
+      steps: 
+        - run: echo ${{ needs.get-pull-requests-from-master.outputs.prNumbersList }}
+
 
