@@ -22,7 +22,7 @@ jobs:
 
             if(prNumbers.length > 0){
                 prNumbers.forEach((prNumber) => {
-                  github.rest.pulls.submitReview({
+                  github.rest.pulls.createReview({
                     owner,
                     repo,
                     pull_number: prNumber,
