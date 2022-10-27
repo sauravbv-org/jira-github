@@ -2,42 +2,42 @@ name: Auto approve and merge PR
 on: workflow_dispatch
       
 jobs:
-  get-pull-requests-from-master:
-    runs-on: ubuntu-latest
-    permissions:
-          pull-requests: write
-    steps:
-      - name: Get list of PRs from master
-        uses: actions/github-script@v6
-        id: prlist
-        with:
-          script: |
-            const { repo, owner } = context.repo;
+  # get-pull-requests-from-master:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #         pull-requests: write
+  #   steps:
+  #     - name: Get list of PRs from master
+  #       uses: actions/github-script@v6
+  #       id: prlist
+  #       with:
+  #         script: |
+  #           const { repo, owner } = context.repo;
 
-            const prNumbers = await github.rest.pulls.list({
-              owner,
-              repo,
-              head: 'sauravbv-org:main'             
-            }).then((response) => {
-              let prNumbers = []
-              response.data.forEach((pr) => prNumbers.push(pr.number))
-              return prNumbers
-            });
+  #           const prNumbers = await github.rest.pulls.list({
+  #             owner,
+  #             repo,
+  #             head: 'sauravbv-org:main'             
+  #           }).then((response) => {
+  #             let prNumbers = []
+  #             response.data.forEach((pr) => prNumbers.push(pr.number))
+  #             return prNumbers
+  #           });
 
-            if(prNumbers.length > 0){
-                prNumbers.forEach((prNumber) => {
-                  github.rest.pulls.createReview({
-                    owner,
-                    repo,
-                    pull_number: prNumber,
-                    event: 'APPROVE',
-                    body: `PR approved by auto_approve action`
-                  })
-                })
-              }
+  #           if(prNumbers.length > 0){
+  #               prNumbers.forEach((prNumber) => {
+  #                 github.rest.pulls.createReview({
+  #                   owner,
+  #                   repo,
+  #                   pull_number: prNumber,
+  #                   event: 'APPROVE',
+  #                   body: `PR approved by auto_approve action`
+  #                 })
+  #               })
+  #             }
 
-  merge-approved-pull-requests:
-    needs: get-pull-requests-from-master
+   merge-approved-pull-requests:
+    # needs: get-pull-requests-from-master
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
